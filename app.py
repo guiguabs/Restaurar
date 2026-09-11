@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__, template_folder='.')
 
 # Chave secreta obrigatória para usar sessões no Flask
-app.secret_key = 'chave_secreta_restaurar_fc'
+app = Flask(__name__)
 
 # Configuração do Banco de Dados SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
