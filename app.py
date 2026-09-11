@@ -3,8 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__, template_folder='.')
 
 # Chave secreta obrigatória para usar sessões no Flask
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder='menu')
 # Configuração do Banco de Dados SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
