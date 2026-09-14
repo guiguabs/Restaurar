@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Jogos - Restaurar F.C</title>
+    
+    <style>
+        /* --- ESTILOS GLOBAIS E DE LAYOUT --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #050811; 
+            color: #f3f4f6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* --- FUNDO COM DESFOQUE --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("{{ url_for('static', filename='escudo.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px);
+            opacity: 0.25;
+            z-index: -1;
+            transform: scale(1.02);
+        }
+
+        /* --- TARJA SUPERIOR (DEGRADÊ) --- */
+        .cabecalho-tarja {
+            background: linear-gradient(to right, #1e3a8a, #0f172a, #000000); 
+            color: white;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2563eb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .cabecalho-tarja h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .destaque-clube {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-sair {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #001aff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-sair:hover {
+            background-color: rgba(93, 38, 220, 0.2);
+            color: #ffffff;
+            border-color: #0400ff;
+            transform: translateY(-1px);
+        }
+
+        /* --- MENU LATERAL (SIDEBAR RETRÁTIL) --- */
+        .sidebar {
+            position: fixed;
+            top: 61px;
+            left: -220px;
+            width: 260px;
+            height: calc(100vh - 61px);
+            background: linear-gradient(135deg, rgba(11, 15, 25, 0.95), rgba(2, 6, 23, 0.95));
+            backdrop-filter: blur(10px);
+            border-right: 1px solid #1e293b;
+            border-bottom: 1px solid #1e293b;
+            border-top-right-radius: 16px;
+            border-bottom-right-radius: 16px;
+            box-shadow: 8px 4px 25px rgba(0, 0, 0, 0.7);
+            transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            padding-top: 20px;
+        }
+
+        .sidebar:hover {
+            left: 0;
+        }
+
+        .sidebar::after {
+            content: "➔";
+            position: absolute;
+            right: 15px;
+            top: 20px;
+            color: #60a5fa;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .sidebar:hover::after {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-titulo {
+            color: #60a5fa;
+            font-size: 13px;
+            padding: 0 20px;
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 10px;
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-links li {
+            margin: 8px 12px;
+        }
+
+        .sidebar-links li a {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            padding: 12px 14px;
+            text-decoration: none;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-links li a:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            transform: translateX(6px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            border-color: #3b82f6;
+        }
+
+        /* --- CONTEÚDO DOS JOGOS --- */
+        .jogos-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .jogos-container h2 {
+            color: #3b82f6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-size: 1.6rem;
+        }
+
+        .grid-jogos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .card-jogo {
+            background-color: #0b0f19;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card-jogo:hover {
+            transform: translateY(-5px);
+            border-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .card-imagem {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background-color: #020617;
+        }
+
+        .card-conteudo {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .card-confronto {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #ffffff;
+            text-align: center;
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .card-info {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-info strong {
+            color: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TARJA SUPERIOR -->
+    <header class="cabecalho-tarja">
+        <h1>Olá, {{ nome }}! (<span class="destaque-clube">Restaurar F.C</span>)</h1>
+        <a href="/logout" class="btn-sair">Sair</a>
+    </header>
+
+    <!-- MENU LATERAL RETRÁTIL -->
+    <div class="sidebar">
+        <div class="sidebar-titulo">Menu do Clube</div>
+        <ul class="sidebar-links">
+            <li><a href="/jogos">Data de Jogos</a></li>
+            <li><a href="/patrocinadores">Patrocinadores</a></li>
+            <li><a href="/historia">História do Time</a></li>
+            <li><a href="/conquistas">Seção de Conquistas</a></li>
+            <li><a href="/noticias">Notícias</a></li>
+        </ul>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="jogos-container">
+        <h2>⚽ Próximos Jogos do Restaurar F.C</h2>
+
+        <div class="grid-jogos">
+            
+            <div class="card-jogo">
+                <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=500&q=80" alt="Estádio" class="card-imagem">
+                <div class="card-conteudo">
+                    <div class="card-confronto">Time A vs Time B</div>
+                    <p class="card-info"> <strong>Data:</strong> 18/09/2026 - 21:30</p>
+                    <p class="card-info"> <strong>Local:</strong> Estádio Municipal</p>
+                </div>
+            </div>
+
+            <div class="card-jogo">
+                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=500&q=80" alt="Futebol" class="card-imagem">
+                <div class="card-conteudo">
+                    <div class="card-confronto">Time C vs Time D</div>
+                    <p class="card-info"> <strong>Data:</strong> 22/09/2026 - 16:00</p>
+                    <p class="card-info"> <strong>Local:</strong> Arena Esportiva</p>
+                </div>
+            </div>
+
+            <div class="card-jogo">
+                <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=500&q=80" alt="Partida" class="card-imagem">
+                <div class="card-conteudo">
+                    <div class="card-confronto">Time E vs Time F</div>
+                    <p class="card-info"> <strong>Data:</strong> 25/09/2026 - 19:00</p>
+                    <p class="card-info"> <strong>Local:</strong> Estádio Principal</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
