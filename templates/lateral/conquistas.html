@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conquistas - Restaurar F.C</title>
+    <!-- CSS Global puxado da pasta static -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Estilos específicos para a galeria de conquistas */
+        .conquistas-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .conquistas-container h2 {
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-size: 26px;
+            letter-spacing: 0.5px;
+        }
+
+        .grid-conquistas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card-conquista {
+            background: rgba(11, 15, 25, 0.85);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            text-align: left;
+        }
+
+        .card-conquista:hover {
+            transform: translateY(-4px);
+            border-color: #2563eb;
+        }
+
+        .card-conquista img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #1e293b;
+            display: block;
+        }
+
+        .card-conteudo {
+            padding: 20px;
+        }
+
+        .card-conteudo .data-conquista {
+            color: #60a5fa;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .card-conteudo h3 {
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+
+        .card-conteudo p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SÓ APARECE SE O USUÁRIO ESTIVER LOGADO -->
+    {% if nome %}
+        <header class="cabecalho-tarja">
+            <h1>Olá, {{ nome }}! (<span class="destaque-clube">Restaurar F.C</span>)</h1>
+            <a href="/logout" class="btn-sair">Sair</a>
+        </header>
+
+        <div class="sidebar">
+            <div class="sidebar-titulo">Menu do Clube</div>
+            <ul class="sidebar-links">
+                <li><a href="/painel">Painel Principal</a></li>
+                <li><a href="/jogos">Data de Jogos</a></li>
+                <li><a href="/patrocinadores">Patrocinadores</a></li>
+                <li><a href="/historia">História do Time</a></li>
+                <li><a href="/conquistas">Seção de Conquistas</a></li>
+            </ul>
+        </div>
+    {% else %}
+        <!-- Tarja Padrão para Visitantes (Não Logados) -->
+        <header class="cabecalho-tarja">
+            <h1>Restaurar F.C</h1>
+            <div class="botoes-topo">
+                <a href="/login" class="btn btn-login">Entrar</a>
+                <a href="/cadastro" class="btn btn-cadastro">Cadastrar</a>
+            </div>
+        </header>
+    {% endif %}
+
+    <!-- Conteúdo Principal: Conquistas -->
+    <div class="conquistas-container">
+        <h2>Galeria de Conquistas e Títulos</h2>
+        
+        <div class="grid-conquistas">
+            <!-- Conquista 1 -->
+            <div class="card-conquista">
+                <img src="{{ url_for('static', filename='images/trofel.jpg') }}" alt="Troféu do Campeonato">
+                <div class="card-conteudo">
+                    <span class="data-conquista">Dezembro de 2025</span>
+                    <h3>Campeonato Municipal de Futebol</h3>
+                    <p>Conquista invicta do torneio municipal após uma final emocionante decidida nos pênaltis.</p>
+                </div>
+            </div>
+
+            <!-- Conquista 2 -->
+            <div class="card-conquista">
+                <img src="{{ url_for('static', filename='images/trofel.jpg') }}" alt="Troféu da Copa">
+                <div class="card-conteudo">
+                    <span class="data-conquista">Agosto de 2025</span>
+                    <h3>Copa Regional de Bairro</h3>
+                    <p>Superação em campo e levantamento da taça de campeão da copa regional da temporada.</p>
+                </div>
+            </div>
+
+            <!-- Conquista 3 -->
+            <div class="card-conquista">
+                <img src="{{ url_for('static', filename='images/trofel.jpg') }}" alt="Troféu do Torneio">
+                <div class="card-conteudo">
+                    <span class="data-conquista">Março de 2024</span>
+                    <h3>Torneio Início</h3>
+                    <p>Primeiro troféu oficial da história do clube, marcando o início da nossa trajetória vitoriosa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

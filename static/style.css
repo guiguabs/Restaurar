@@ -1,0 +1,301 @@
+/* --- ESTILO GLOBAL DO SISTEMA --- */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #050811; 
+    color: #f3f4f6;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* --- TARJA SUPERIOR (DEGRADÊ) --- */
+.cabecalho-tarja {
+    background: linear-gradient(to right, #1e3a8a, #0f172a, #000000); 
+    color: white;
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #2563eb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 1001;
+}
+
+.cabecalho-tarja h1 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+/* --- DESTAQUE ESPECIAL PARA O NOME DO CLUBE --- */
+.destaque-clube {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+/* --- BOTÕES GERAIS E DE NAVEGAÇÃO --- */
+.btn {
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-login {
+    background-color: #2563eb;
+    color: white;
+    border: 2px solid #2563eb;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+}
+
+.btn-login:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.btn-cadastro {
+    background-color: transparent;
+    color: #93c5fd;
+    border: 2px solid #1e3a8a;
+}
+
+.btn-cadastro:hover {
+    background-color: rgba(37, 99, 235, 0.15);
+    color: #ffffff;
+    border-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+/* --- BOTÕES VOLTAR E SAIR PADRONIZADOS --- */
+.btn-voltar, .btn-sair {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #2563eb;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-voltar:hover, .btn-sair:hover {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: #ffffff;
+    border-color: #3b82f6;
+    transform: translateY(-1px);
+}
+
+/* --- CAIXAS DE FORMULÁRIO E AUTENTICAÇÃO --- */
+.auth-container, .painel-container {
+    max-width: 400px;
+    margin: 40px auto;
+    background: rgba(11, 15, 25, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.painel-container {
+    max-width: 800px;
+    margin-top: 60px;
+    text-align: center;
+}
+
+.auth-container h2, .painel-container h2 {
+    margin-top: 0;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+}
+
+.painel-container p {
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Alertas de Erro */
+.alerta-erro {
+    background-color: rgba(220, 38, 38, 0.15);
+    border: 1px solid #dc2626;
+    color: #fca5a5;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* Grupos de Formulário */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: #020617;
+    border: 1px solid #1e293b;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.form-group input::placeholder {
+    color: #475569;
+}
+
+.form-group select option {
+    background-color: #0b0f19;
+    color: #ffffff;
+}
+
+/* --- CORRIGE A COR DO TEXTO NO AUTO-PREENCHIMENTO DO NAVEGADOR --- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0 30px #020617 inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+}
+
+.btn-submit:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* --- MENU LATERAL (SIDEBAR) --- */
+.sidebar {
+    position: fixed;
+    top: 61px;
+    left: -220px;
+    width: 260px;
+    height: calc(100vh - 61px);
+    background: linear-gradient(135deg, rgba(11, 15, 25, 0.95), rgba(2, 6, 23, 0.95));
+    backdrop-filter: blur(10px);
+    border-right: 1px solid #1e293b;
+    border-bottom: 1px solid #1e293b;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: 8px 4px 25px rgba(0, 0, 0, 0.7);
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    padding-top: 20px;
+}
+
+.sidebar:hover {
+    left: 0;
+}
+
+.sidebar::after {
+    content: "➔";
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    color: #60a5fa;
+    font-size: 14px;
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.sidebar:hover::after {
+    transform: rotate(180deg);
+}
+
+.sidebar-titulo {
+    color: #60a5fa;
+    font-size: 13px;
+    padding: 0 20px;
+    margin-bottom: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 10px;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-links li {
+    margin: 8px 12px;
+}
+
+.sidebar-links li a {
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    padding: 12px 14px;
+    text-decoration: none;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-links li a:hover {
+    background-color: #2563eb;
+    color: #ffffff;
+    transform: translateX(6px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    border-color: #3b82f6;
+}
